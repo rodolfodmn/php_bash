@@ -1,0 +1,16 @@
+script para instalação da loja
+
+mkdir var
+
+chmod 777 var -R
+
+cp .htaccess ./
+cp local.xml ./app/etc/
+
+update merge 1 to 0 incore_config_data
+
+set db options in local.xml
+
+create db, and pv the data
+
+chage admin password
