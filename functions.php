@@ -27,3 +27,24 @@ function getCurrentDir()
     $thisDir = explode('/', getcwd());
     return $thisDir[count($thisDir) - 1];
 }
+
+/**
+ * deveria verificar se é .bis2bis ¯\_(ヅ)_/¯
+ *
+ * @param $storeDb
+ * @return string
+ */
+function getIsBis2Bis($storeDb)
+{
+    $palheiro = $storeDb;
+    $agulha = 'bis2bis';
+
+
+    $pos = strpos($palheiro, $agulha);
+
+    if ($pos === false) {
+        return false;
+    }
+    return true;
+
+}
