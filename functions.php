@@ -19,6 +19,11 @@ function changeXmlCdataValue($xmlFile, $tagName, $value)
     return $document->save($xmlFile);
 }
 
+function getDump($storeName = null)
+{
+    return $storeName. '.com.br.sql';
+}
+
 /**
  * @return mixed
  */
