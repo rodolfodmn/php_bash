@@ -15,13 +15,12 @@ shell_exec('cp ../hta/htaccess ./.htaccess');
 
 shell_exec('mkdir var/');
 
-//// shell_exec('chmod 777 var/ -R');
+// shell_exec('chmod 777 var/ -R');
 
-// $pv = 'pv ~/dev/dbs/';
-
-// $setPass = changeXmlCdataValue('app/etc/local.xml', 'password', 'root');
+$setPass = changeXmlCdataValue('app/etc/local.xml', 'password', 'root');
 
 // if ($setPass) {
+//     $pv = 'pv ~/dev/dbs/';
 //     $storeDir = (getCurrentDir()) ? getCurrentDir() : false;
 //     $storeDb = ($storeDir) ? str_replace('-', '', $storeDir) : false;
 
