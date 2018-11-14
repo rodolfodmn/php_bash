@@ -17,9 +17,9 @@ shell_exec('cp ../hta/local.xml ./app/etc/');
 shell_exec('cp ../hta/htaccess ./.htaccess');
 
 shell_exec('mkdir var/');
-//// shell_exec('chmod 777 var/ -R');
 
-$pv = 'pv ~/dev/dbs/';
+$dbsPath = '~/dev/dbs/';
+$pv = "pv $dbsPath";
 
 $setPass = changeXmlCdataValue('app/etc/local.xml', 'password', 'root');
 
@@ -31,13 +31,17 @@ if ($setPass) {
 
     if ($storeDir && $storeDb) {
 
-        // $dump = getDump($storeDb);
-
         if (isset($dump)) {
 
+            $files = dirFilesList('~/dev/dbs/');
+            $zipDb = findStoreDumpFile($files, $storeDb);
+
             shell_exec('mysql -u root -proot -e "create database ' . $storeDb . '";');
-            shell_exec("gunzp $storeDb*");
-            shell_exec("mv $storeDb* $storeDb.com.br.sql");
+            shell_exec("gunzip $zipDb");
+
+            $unzipDb = substr($zipDb, 0, strlen($zipDb) - 3);
+
+            shell_exec("mv $unzipDb $storeDb.com.br.sql");
             shell_exec("$pv$storeDb.com.br.sql | mysql -u root -proot $storeDb");
 
             echo shell_exec("mysql -u root -proot -e \"UPDATE $storeDb.admin_user SET password = md5('admin') WHERE email = 'suporte@bis2bis.com.br'\";");

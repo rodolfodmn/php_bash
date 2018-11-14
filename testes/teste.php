@@ -1,9 +1,9 @@
 <?php
 include '/home/rodolfo/dev/php_bash/functions.php';
-
-echo $storeDir = (getCurrentDir()) ? getCurrentDir() : false;
-echo PHP_EOL;
-echo $storeDb = ($storeDir) ? str_replace('-', '', $storeDir) : false;
-echo PHP_EOL;
-echo var_dump(getIsBis2Bis($storeDb));
-echo PHP_EOL;
+$files = dirFilesList('./');
+var_dump($files);
+$unz =  findStoreDumpFile($files, 'ibyte');
+var_dump(substr($unz, 0, strlen($unz)-3));
+// shell_exec("gunzip livrariasfamiliacrista*");
+// shell_exec("mv livrariasfamiliacrista* livrariasfamiliacrista.com.br.sql");
+// echo 'teste maroto!!';

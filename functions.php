@@ -10,7 +10,6 @@ function changeXmlCdataValue($xmlFile, $tagName, $value)
 {
     $document = new DOMDocument();
     $document->load($xmlFile);
-//    $document->loadXml($document);
     $xpath = new DOMXpath($document);
 
     foreach ($xpath->evaluate("//$tagName/text()") as $linkValue) {
@@ -19,9 +18,32 @@ function changeXmlCdataValue($xmlFile, $tagName, $value)
     return $document->save($xmlFile);
 }
 
+function dirFilesList($dir)
+{
+    $dir = dir($dir);
+
+    $files = [];
+    while ($file = $dir->read()) {
+        $files[] = $file;
+    }
+    $dir->close();
+
+    return $files;
+}
+
+function findStoreDumpFile($files, $store)
+{
+    foreach ($files as $file) {
+        if(strpos($file, $store) !== false)
+            return $file;
+    }
+
+    return 'Loja não encontrada';
+}
+
 function getDump($storeName = null)
 {
-    return $storeName. '.com.br.sql';
+    return $storeName . '.com.br.sql';
 }
 
 /**
@@ -43,7 +65,6 @@ function getIsBis2Bis($storeDb)
 {
     $palheiro = $storeDb;
     $agulha = 'bis2bis';
-
 
     $pos = strpos($palheiro, $agulha);
 
