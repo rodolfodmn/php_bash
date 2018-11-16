@@ -38,7 +38,7 @@ function findStoreDumpFile($files, $store)
             return $file;
     }
 
-    return 'Loja não encontrada';
+    return false;
 }
 
 function getDump($storeName = null)
