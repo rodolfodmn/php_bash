@@ -38,6 +38,7 @@ try {
             if ($zipDb) {
                 shell_exec('mysql -u root -proot -e "create database ' . $storeDb . '";');
                 if (shell_exec("gunzip $dbsPath$zipDb")) {
+                    return 'cant get the name folder';
 
                     $unzipDb = substr($zipDb, 0, strlen($zipDb) - 3);
 
