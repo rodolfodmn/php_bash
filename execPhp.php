@@ -1,14 +1,12 @@
 <?php
-try {
+include '/home/rodolfo/dev/php_bash/functions.php';
+$str = 'http://localhost/shop-dos-cristais/media/catalog/product/6/0/601643-pingente-ametista-lapidado.jpg';
 
-    $proxy = new SoapClient('http://localhost/mk-import/api/v2_soap/?wsdl');
+$img_link = $str;
+$link_img_fix = str_replace(
+    'http://localhost/shop-dos-cristais',
+    'https://www.shopdoscristais.com.br',
+    $img_link
+);
 
-    $sessionId = $proxy->login((object) array('username' => 'admin', 'apiKey' => 'admin12'));
-
-    $result = $proxy->salesOrderAddComment((object) array('sessionId' => $sessionId->result, 'orderIncrementId' => '100000305', 'status' => 'pudim', 'state' => 'arroz'));
-    var_dump($result->result);
-} catch (Exception $e) {
-
-    echo $e->getMessage();
-
-}
+echo $link_img_fix;

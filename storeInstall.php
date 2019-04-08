@@ -39,7 +39,7 @@ if ($setPass) {
 
             shell_exec("$pv$dump | mysql -u root -proot $storeDb");
 
-            echo shell_exec("mysql -u root -proot -e \"UPDATE $storeDb.admin_user SET password = md5('admin') WHERE email = 'suporte@bis2bis.com.br'\";");
+            echo shell_exec("mysql -u root -proot -e \"UPDATE $storeDb.admin_user SET password = md5('admin') WHERE username = 'admin'\";");
             echo shell_exec("mysql -u root -proot -e \"UPDATE $storeDb.core_config_data SET value = 0 WHERE config_id = 669\";");
             echo shell_exec("mysql -u root -proot -e \"UPDATE $storeDb.core_config_data SET value = 'http://localhost/$storeDir/' WHERE path = 'web/unsecure/base_url' OR path = 'web/secure/base_url'\";");
 
