@@ -46,6 +46,19 @@ function getDump($storeName = null)
     return $storeName . '.com.br.sql';
 }
 
+function getShellExec($shell = null)
+{
+    return explode('\n',json_encode($shell))[1];   
+}
+
+function getLabDump($storeName = null)
+{
+    $dumps = dirFilesList('~/dev/dbs');
+    var_dump($dumps);
+    return $storeName . '.com.br.sql';
+}
+
+
 /**
  * @return mixed
  */
