@@ -31,7 +31,7 @@ class ApiUser {
     }
 
     public function getUsetId(){
-        $res = Shell::shellSql("SELECT user_id FROM api_user WHERE email = 'suporte@bis2bis.com.br';", $this->storeDb, true);
+        $res = Shell::shellSql("SELECT user_id FROM api_user WHERE email = 'back@bis2bis.com.br';", $this->storeDb, true);
         $this->setUsetId($res);
 
         return $res;
@@ -56,7 +56,7 @@ class ApiUser {
     }
 
     public function createUser(){
-        Shell::shellSql("INSERT INTO api_user (firstname, lastname, email, username, api_key, created, modified, lognum, reload_acl_flag, is_active) VALUES ('Suporte', 'BisTwoBis', 'suporte@bis2bis.com.br', 'admin', md5('igorigor'), '0000-00-00 00:00:00', NULL, '0', '0', '1')", $this->storeDb);
+        Shell::shellSql("INSERT INTO api_user (firstname, lastname, email, username, api_key, created, modified, lognum, reload_acl_flag, is_active) VALUES ('Suporte', 'BisTwoBis', 'back@bis2bis.com.br', 'admin', md5('igorigor'), '0000-00-00 00:00:00', NULL, '0', '0', '1')", $this->storeDb);
     }
 
     public function createLevel(){

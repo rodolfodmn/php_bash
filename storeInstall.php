@@ -25,6 +25,7 @@ $pv = 'pv ~/dev/dbs/';
 $labSql = 'sql_para_lojas_gitlab.sql';
 
 $setPass = changeXmlCdataValue('app/etc/local.xml', 'password', 'root');
+$dontOpen = ($argv[1]) ? $argv[1] : false ;
 
 if ($setPass) {
     $storeDir = (getCurrentDir()) ? getCurrentDir() : false;
@@ -53,9 +54,10 @@ if ($setPass) {
             shell_exec("mysql -u root -proot -e \"$googleRecaSql\";");
 
             new ApiUser($storeDb);
-
-            shell_exec("google-chrome http://localhost/$storeDir/");
-            shell_exec("google-chrome http://localhost/$storeDir/admin");
+            if(!$dontOpen){
+                shell_exec("google-chrome http://localhost/$storeDir/");
+                shell_exec("google-chrome http://localhost/$storeDir/admin");
+            }
             
             shell_exec('compass compile');
         } else {

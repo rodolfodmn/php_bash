@@ -53,12 +53,15 @@ function getShellExec($shell = null)
 
 function getLabDump($storeName = null)
 {
-    $dumps = dirFilesList('~/dev/dbs');
-    var_dump($dumps);
-    return $storeName . '.com.br.sql';
+    $dumps = dirFilesList('/home/rodolfo/dev/dbs');
+    $file = findStoreDumpFile($dumps, $storeName);
+    
+    return $file;
 }
 
-
+function makeSqlStoreFile($file){
+    shell_exec("mysql -u root -proot -e \"$googleRecaSql\";");
+}
 /**
  * @return mixed
  */

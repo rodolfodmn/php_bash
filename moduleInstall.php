@@ -14,7 +14,7 @@ include 'functions.php';
 echo 'php script é o caminho!' . PHP_EOL;
 echo 'instalando module..' . PHP_EOL;
 
-$ref = $argv[2];
+$ref = (isset($argv[2])) ? $argv[2] : '' ;
 $module  = $argv[1];
 $modulesDir = (isset($argv[3]) && isset($argv[3]) === true) ? "/home/rodolfo/dev/modulos-dev/modulo-" : "/home/rodolfo/dev/modulos/modulo-" ;
 $moduleDirFull = $modulesDir.$module;

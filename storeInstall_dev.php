@@ -11,6 +11,7 @@
 
 include 'functions.php';
 include 'Model/ApiUser.php';
+// include 'Model/Helper/Shell.php';
 
 echo 'php script é o caminho!' . PHP_EOL;
 
@@ -34,8 +35,9 @@ if ($setPass) {
 
     if ($storeDir && $storeDb) {
 
-        $dump = getDump($storeDb);
-
+        $dump = Shell::getLabDump($storeDb);
+        var_dump($dump);
+        exit;
         if (isset($dump)) {
 
             $httpsSql = "UPDATE $storeDb.checkout_config_data SET https = 2 WHERE (oschttpsurl LIKE '%https%' OR oscloginhttpsurl LIKE '%https%' OR text_term LIKE '%https%' OR version LIKE '%https%') AND id = 1";
