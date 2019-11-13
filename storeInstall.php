@@ -23,50 +23,50 @@ shell_exec('mkdir var/');
 $pv = 'pv ~/dev/dbs/';
 // $pv = 'pv /var/www/html/';
 $labSql = 'sql_para_lojas_gitlab.sql';
-
+$host = '172.17.0.2';
 $setPass = changeXmlCdataValue('app/etc/local.xml', 'password', 'root');
 $dontOpen = ($argv[1]) ? $argv[1] : false ;
 
 if ($setPass) {
-    $storeDir = (getCurrentDir()) ? getCurrentDir() : false;
-    $storeDb = ($storeDir) ? str_replace('-', '', $storeDir) : false;
+	$storeDir = (getCurrentDir()) ? getCurrentDir() : false;
+	$storeDb = ($storeDir) ? str_replace('-', '', $storeDir) : false;
 
-    $setDB = changeXmlCdataValue('app/etc/local.xml', 'dbname', $storeDb);
+	$setDB = changeXmlCdataValue('app/etc/local.xml', 'dbname', $storeDb);
 
-    if ($storeDir && $storeDb) {
+	if ($storeDir && $storeDb) {
 
-        $dump = getDump($storeDb);
+		$dump = getDump($storeDb);
 
-        if (isset($dump)) {
+		if (isset($dump)) {
 
-            $httpsSql = "UPDATE $storeDb.checkout_config_data SET https = 2 WHERE (oschttpsurl LIKE '%https%' OR oscloginhttpsurl LIKE '%https%' OR text_term LIKE '%https%' OR version LIKE '%https%') AND id = 1";
-            $googleRecaSql = "UPDATE $storeDb.core_config_data SET value = 0 WHERE path LIKE '%active%' AND path LIKE '%googlerecaptcha%'";
+			$httpsSql = "UPDATE $storeDb.checkout_config_data SET https = 2 WHERE (oschttpsurl LIKE '%https%' OR oscloginhttpsurl LIKE '%https%' OR text_term LIKE '%https%' OR version LIKE '%https%') AND id = 1";
+			$googleRecaSql = "UPDATE $storeDb.core_config_data SET value = 0 WHERE path LIKE '%active%' AND path LIKE '%googlerecaptcha%'";
 
-            shell_exec('mysql -u root -proot -e "create database ' . $storeDb . '";');
-            shell_exec("$pv$dump | mysql -u root -proot $storeDb");
+			shell_exec('mysql -u root -proot -e "create database ' . $storeDb . '";');
+			shell_exec("$pv$dump | mysql -u root -proot $storeDb");
 
-            shell_exec("mysql -u root -proot -e \"UPDATE $storeDb.admin_user SET password = md5('admin') WHERE username = 'admin'\";");
-            shell_exec("mysql -u root -proot -e \"UPDATE $storeDb.core_config_data SET value = 0 WHERE config_id = 669\";");
-            shell_exec("mysql -u root -proot -e \"UPDATE $storeDb.core_config_data SET value = 'http://localhost/$storeDir/' WHERE path = 'web/unsecure/base_url' OR path = 'web/secure/base_url'\";");
-            shell_exec("mysql -u root -proot -e \"use $storeDb; DROP TRIGGER IF EXISTS upd_stock\";");
-            shell_exec("$pv$labSql | mysql -u root -proot $storeDb");
-            shell_exec("mysql -u root -proot -e \"$httpsSql\";");
-            shell_exec("mysql -u root -proot -e \"$googleRecaSql\";");
+			shell_exec("mysql -u root -proot -e \"UPDATE $storeDb.admin_user SET password = md5('admin') WHERE username = 'admin'\";");
+			shell_exec("mysql -u root -proot -e \"UPDATE $storeDb.core_config_data SET value = 0 WHERE config_id = 669\";");
+			shell_exec("mysql -u root -proot -e \"UPDATE $storeDb.core_config_data SET value = 'http://$host/$storeDir/' WHERE path = 'web/unsecure/base_url' OR path = 'web/secure/base_url'\";");
+			shell_exec("mysql -u root -proot -e \"use $storeDb; DROP TRIGGER IF EXISTS upd_stock\";");
+			shell_exec("$pv$labSql | mysql -u root -proot $storeDb");
+			shell_exec("mysql -u root -proot -e \"$httpsSql\";");
+			shell_exec("mysql -u root -proot -e \"$googleRecaSql\";");
 
-            new ApiUser($storeDb);
-            if(!$dontOpen){
-                shell_exec("google-chrome http://localhost/$storeDir/");
-                shell_exec("google-chrome http://localhost/$storeDir/admin");
-            }
-            
-            shell_exec('compass compile');
-        } else {
-            return 'dump error';
-        }
+			new ApiUser($storeDb);
+			if(!$dontOpen){
+				shell_exec("google-chrome http://localhost/$storeDir/");
+				shell_exec("google-chrome http://localhost/$storeDir/admin");
+			}
 
-    } else {
-        return 'cant get the name folder';
-    }
+			shell_exec('compass compile');
+		} else {
+			return 'dump error';
+		}
+
+	} else {
+		return 'cant get the name folder';
+	}
 } else {
-    return 'error editing the local.xml';
+	return 'error editing the local.xml';
 }
