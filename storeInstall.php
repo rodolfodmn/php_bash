@@ -42,7 +42,7 @@ if ($setPass) {
 			$httpsSql = "UPDATE $storeDb.checkout_config_data SET https = 2 WHERE (oschttpsurl LIKE '%https%' OR oscloginhttpsurl LIKE '%https%' OR text_term LIKE '%https%' OR version LIKE '%https%') AND id = 1";
 			$googleRecaSql = "UPDATE $storeDb.core_config_data SET value = 0 WHERE path LIKE '%active%' AND path LIKE '%googlerecaptcha%'";
 
-			shell_exec('mysql -u root -proot -e "create database ' . $storeDb . '";');
+			shell_exec('mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS ' . $storeDb . '";');
 			shell_exec("$pv$dump | mysql -u root -proot $storeDb");
 
 			shell_exec("mysql -u root -proot -e \"UPDATE $storeDb.admin_user SET password = md5('admin') WHERE username = 'admin'\";");
