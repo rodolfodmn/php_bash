@@ -23,6 +23,7 @@ shell_exec('mkdir var/');
 $pv = 'pv ~/dev/dbs/';
 // $pv = 'pv /var/www/html/';
 $labSql = 'sql_para_lojas_gitlab.sql';
+//$host = 'meu.loc';
 $host = '172.17.0.2';
 $setPass = changeXmlCdataValue('app/etc/local.xml', 'password', 'root');
 $dontOpen = ($argv[1]) ? $argv[1] : false ;
